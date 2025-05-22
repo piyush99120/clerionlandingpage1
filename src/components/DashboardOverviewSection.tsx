@@ -1,7 +1,6 @@
 'use client';
 import React from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { motion } from "framer-motion";import Image from "next/image"; // Ensure Image is imported if used
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -26,8 +25,8 @@ const fadeInUp = {
 
 const mockupVariants = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
     transition: { duration: 0.7, delay: 0.5 }
   },
@@ -165,26 +164,18 @@ const DashboardOverviewSection = () => {
         <motion.div
           variants={mockupVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           whileHover="hover"
           className="max-w-4xl mx-auto bg-gradient-to-br from-[#33B1E1]/10 via-blue-100/10 to-[#33B1E1]/5 rounded-xl p-8 shadow-2xl relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-white/40 backdrop-blur-sm" />
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.8 }}
-            className="bg-white rounded-lg shadow-inner p-6 relative z-10"
-          >
-            <img 
-              src="/Group 9 (1).svg" 
-              alt="Dashboard Interface"
-              className="w-full h-auto rounded-lg shadow-lg"
-              onError={(e) => {
-                e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 400"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="system-ui" font-size="24" fill="%236b7280">Dashboard Preview</text></svg>';
-              }}
-            />
-          </motion.div>
+          <Image
+            src="/Group 9 (1).svg" // Ensure this image exists in your public folder
+            alt="Dashboard Overview Mockup"
+            width={1200} // Example width, adjust as needed
+            height={800} // Example height, adjust as needed
+            className="w-full h-auto rounded-lg shadow-inner"
+            priority
+          />
         </motion.div>
       </div>
     </section>

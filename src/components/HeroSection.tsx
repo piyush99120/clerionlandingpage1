@@ -22,6 +22,7 @@ const containerVariants = {
 const HeroSection = () => {
   return (
     <section className="min-h-screen w-full py-20 relative overflow-hidden">
+      {/* Logo Background */}
       {/* Background Pattern */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -39,7 +40,7 @@ const HeroSection = () => {
         </svg>
       </motion.div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10"> {/* Removed mt-24 class */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -53,7 +54,7 @@ const HeroSection = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute -inset-1 bg-gradient-to-r from-[#33B1E1]/10 to-blue-500/10 rounded-xl blur opacity-0 group-hover:opacity-75 transition duration-500" />
-            <div className="relative z-10 h-full flex flex-col justify-center"> // Added h-full and flex styles
+            <div className="relative z-10 h-full flex flex-col justify-center"> {/* Added h-full and flex styles */}
               <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#33B1E1] to-blue-600 text-transparent bg-clip-text mb-8">
                 Streamline Your Financial Operations
               </h1>
