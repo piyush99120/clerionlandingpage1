@@ -12,7 +12,7 @@ export default function Home() {
       <DashboardOverviewSection />
       <SuperAdminDashboardSection />
       <PractitionerDashboardSection />
-      <UserDashboardSection />
+      {/* <UserDashboardSection /> */}
       <IntegrationsAndTechStackSection />
     </main>
   );

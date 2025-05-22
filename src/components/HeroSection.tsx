@@ -1,148 +1,135 @@
 'use client';
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import dynamic from 'next/dynamic';
 
-// Dynamically import the Lottie Player with SSR disabled
-const Player = dynamic(
-  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
-  { ssr: false }
-);
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
 
-export default function HeroSection() {
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const HeroSection = () => {
   return (
-    <section className="bg-gradient-to-br from-white to-gray-50 min-h-screen flex items-start justify-center relative overflow-hidden pt-4 px-4">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none -z-10">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.1 }}
-          transition={{ duration: 1 }}
-          className="absolute top-20 left-10 w-64 h-64"
-        >
-          <svg className="w-full h-full text-gray-200" fill="currentColor" viewBox="0 0 200 200">
-            <path d="M40,0 L160,0 C180,0 200,20 200,40 L200,160 C200,180 180,200 160,200 L40,200 C20,200 0,180 0,160 L0,40 C0,20 20,0 40,0 Z" />
-          </svg>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="absolute bottom-20 right-10 w-72 h-72"
-        >
-          <svg className="w-full h-full text-gray-200" fill="currentColor" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="100" />
-          </svg>
-        </motion.div>
-      </div>
+    <section className="min-h-screen w-full py-20 relative overflow-hidden">
+      {/* Background Pattern */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 0.05, scale: 1 }}
+        transition={{ duration: 1.2 }}
+        className="absolute inset-0"
+      >
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <pattern id="hero-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M0 0h50v50H0z" fill="none" />
+            <circle cx="25" cy="25" r="1" fill="#33B1E1" />
+            <path d="M0 0l50 50M50 0L0 50" stroke="#33B1E1" strokeWidth="0.5" />
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#hero-pattern)" />
+        </svg>
+      </motion.div>
 
-      <div className="container mx-auto grid md:grid-cols-2 gap-8 items-start">
-        {/* Left Content */}
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-4 pt-2"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid lg:grid-cols-2 gap-12 items-stretch" // Changed to items-stretch
         >
-          {/* Logo */}
+          {/* Hero Content */}
           <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="w-72 relative mb-4"
+            variants={cardVariants}
+            className="bg-white/90 backdrop-blur-lg rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/50 relative overflow-hidden group flex flex-col justify-center min-h-[500px]" // Added flex, justify-center and min-height
           >
-            <Image
-              src="/clerion-logo.png"
-              alt="Clerion Logo"
-              width={300}
-              height={150}
-              priority
-              className="object-contain"
-            />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#33B1E1]/10 to-blue-500/10 rounded-xl blur opacity-0 group-hover:opacity-75 transition duration-500" />
+            <div className="relative z-10 h-full flex flex-col justify-center"> // Added h-full and flex styles
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#33B1E1] to-blue-600 text-transparent bg-clip-text mb-8">
+                Streamline Your Financial Operations
+              </h1>
+              <p className="text-gray-600 text-lg mb-12">
+              Clarion is tailored for professional firms and individual practitioners like Chartered Accountants, Company Secretaries, and Lawyers. It enables seamless management of multiple clients simultaneously without losing track of communication, tasks, or critical data.
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-[#33B1E1] to-blue-600 text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl transition-shadow w-fit"
+              >
+                Get Started
+              </motion.button>
+            </div>
           </motion.div>
 
-          {/* Title and Content */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-extrabold text-gray-900"
+          {/* Hero Image */}
+          <motion.div
+            variants={cardVariants}
+            className="bg-white/90 backdrop-blur-lg rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/50 relative overflow-hidden group min-h-[500px]" // Added min-height
           >
-            Clarion: Smarter Project & Team Management
-          </motion.h1>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl font-semibold text-[#33B1E1]"
-          >
-            Built for Chartered Accountants, Company Secretaries, and Legal Professionals
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-gray-700 text-lg max-w-xl"
-          >
-            Clarion is a specialized management platform designed for professional firms and individual practitioners. Effortlessly handle multiple clients, ensure efficient task tracking, secure communication, and streamlined document sharing—all in one place.
-          </motion.p>
-
-          {/* Floating Professional Icons */}
-          <div className="flex gap-4 mt-8">
-            {[
-              { icon: "⚖️", label: "Legal" },
-              { icon: "📊", label: "Tax" },
-              { icon: "📋", label: "Compliance" }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg flex flex-col items-center gap-2"
-              >
-                <span className="text-2xl">{item.icon}</span>
-                <span className="text-sm font-medium text-gray-600">{item.label}</span>
-              </motion.div>
-            ))}
-          </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#33B1E1]/10 to-blue-500/10 rounded-xl blur opacity-0 group-hover:opacity-75 transition duration-500" />
+            <div className="relative z-10">
+              <div className="relative rounded-lg overflow-hidden shadow-xl">
+                <Image
+                  src="/spreadsheet-document-information-financial-startup-concept.jpg"
+                  alt="Financial Analytics Dashboard"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto rounded-lg transform group-hover:scale-105 transition-transform duration-500"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+              <div className="absolute bottom-12 left-12 right-12 bg-white/90 backdrop-blur-md rounded-lg p-4 shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">Powerful Analytics</h3>
+                <p className="text-sm text-gray-600">Track your financial data with our intuitive spreadsheet interface</p>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
 
-        {/* Right Content - 3D Illustration */}
+        {/* Feature Highlights */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="relative h-[500px] flex items-center justify-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
         >
-          <Player
-            autoplay
-            loop
-            src="https://assets2.lottiefiles.com/packages/lf20_xyadoh9h.json"
-            style={{ height: '100%', width: '100%' }}
-          />
+          {[
+            { icon: "🚀", title: "Quick Setup" },
+            { icon: "🔒", title: "Secure Platform" },
+            { icon: "📊", title: "Real-time Analytics" },
+            { icon: "💡", title: "Smart Solutions" }
+          ].map((feature, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-[#33B1E1]/10 flex flex-col items-center relative group overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#33B1E1]/5 via-blue-50/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#33B1E1]/20 to-blue-500/20 rounded-lg blur opacity-0 group-hover:opacity-50 transition duration-500" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#33B1E1]/10 to-white flex items-center justify-center mb-4 shadow-inner">
+                  <span className="text-2xl transform group-hover:scale-110 transition-transform duration-300">{feature.icon}</span>
+                </div>
+                <span className="text-sm font-medium text-gray-700 text-center block group-hover:text-[#33B1E1] transition-colors duration-300">{feature.title}</span>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDownIcon className="w-6 h-6 text-gray-400" />
-        </motion.div>
-      </motion.div>
     </section>
   );
-}
+};
+
+export default HeroSection;

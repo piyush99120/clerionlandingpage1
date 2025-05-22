@@ -8,61 +8,121 @@ const fadeInUp = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  hidden: { opacity: 0, x: -100, scale: 0.8 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.5,
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  })
 };
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.18, delayChildren: 0.2 }
+    transition: { staggerChildren: 0.2, delayChildren: 0.3 }
   }
 };
 
 const iconFloat = {
+  initial: { scale: 1, rotate: 0 },
   animate: {
-    y: [0, -8, 0],
-    transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+    scale: [1, 1.2, 1],
+    rotate: [0, 10, -10, 0],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
   }
 };
 
-const imageVariants = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+const laptopVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      duration: 0.8
+    }
+  }
 };
 
 export default function PractitionerDashboardSection() {
   return (
-    <section className="bg-gradient-to-b from-[#F0FAFF] to-white py-16 px-4">
-      <div className="max-w-7xl mx-auto min-h-[600px]">
+    <section className="bg-gradient-to-br from-[#f8fafc] via-white to-[#f0f9ff] py-24 px-4 relative overflow-hidden">
+      {/* Animated Background Pattern */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 0.1, scale: 1 }}
+          transition={{ duration: 1.5 }}
+          className="w-full h-full"
+        >
+          <div className="absolute w-96 h-96 -top-48 -right-48 bg-[#33B1E1]/20 rounded-full blur-3xl" />
+          <div className="absolute w-96 h-96 -bottom-48 -left-48 bg-blue-500/20 rounded-full blur-3xl" />
+        </motion.div>
+      </div>
+
+      {/* Grid Pattern */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.05 }}
+        transition={{ duration: 1 }}
+        className="absolute inset-0"
+      >
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="practitioner-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#33B1E1" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#practitioner-grid)" />
+        </svg>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.h2
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          className="text-3xl md:text-4xl font-bold text-[#33B1E1] mb-4 text-center"
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold text-center mb-6"
         >
-          Practitioner Dashboard
+          <span className="bg-gradient-to-r from-[#33B1E1] to-blue-600 text-transparent bg-clip-text">
+            Practitioner Dashboard
+          </span>
         </motion.h2>
+
         <motion.p
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ delay: 0.1 }}
-          className="max-w-2xl mx-auto text-center text-gray-700 mb-12"
+          viewport={{ once: true }}
+          className="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-16"
         >
           Streamline your practice with powerful tools designed for efficient case management and client communication.
         </motion.p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Feature Cards */}
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Feature Cards - Now on the right side */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            className="grid gap-8"
+            viewport={{ once: true }}
+            className="space-y-6 order-2 lg:order-2"
           >
             {[
               { icon: "💬", title: "Chat with Users", description: "Secure and instant messaging platform for client communication" },
@@ -73,43 +133,59 @@ export default function PractitionerDashboardSection() {
             ].map((feature, index) => (
               <motion.div
                 key={index}
+                custom={index}
                 variants={cardVariants}
-                whileHover={{ scale: 1.04, borderColor: "#33B1E1", boxShadow: "0 8px 32px rgba(51,177,225,0.08)" }}
-                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-transparent"
+                whileHover={{ scale: 1.02, translateX: -10 }}
+                className="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 relative group overflow-hidden"
               >
-                <div className="flex items-start gap-4">
-                  <motion.span className="text-3xl" animate="animate" variants={iconFloat}>{feature.icon}</motion.span>
+                <div className="absolute inset-0 bg-gradient-to-l from-[#33B1E1]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="flex items-start gap-4 relative z-10">
+                  <motion.div
+                    initial="initial"
+                    animate="animate"
+                    variants={iconFloat}
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#33B1E1]/10 to-blue-500/10 flex items-center justify-center"
+                  >
+                    <span className="text-2xl">{feature.icon}</span>
+                  </motion.div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1">{feature.title}</h3>
-                    <p className="text-sm text-gray-600">{feature.description}</p>
+                    <h3 className="font-semibold text-gray-800 group-hover:text-[#33B1E1] transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 mt-1">{feature.description}</p>
                   </div>
                 </div>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Dashboard Image/Illustration */}
+          {/* Laptop Mockup - Now on the left side */}
           <motion.div
-            variants={imageVariants}
+            variants={laptopVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            className="order-first md:order-last"
+            viewport={{ once: true }}
+            className="relative order-1 lg:order-1"
           >
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              className="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden transition-transform duration-300"
-            >
-              <img
-                // src="/practitioner-dashboard.svg"
-                alt="Practitioner Dashboard Interface"
-                className="w-[100%] h-auto"
-                onError={(e) => {
-                  e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="system-ui" font-size="24" fill="%236b7280">Practitioner Dashboard Preview</text></svg>';
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#33B1E1]/20 to-transparent"></div>
-            </motion.div>
+            <div className="relative bg-gradient-to-tr from-gray-900 to-gray-800 rounded-t-2xl p-4 shadow-2xl">
+              <div className="absolute top-1.5 left-4 flex space-x-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+              </div>
+              <div className="pt-4">
+                <img
+                  src="/Screenshot 2025-05-22 162323.png"
+                  alt="Practitioner Dashboard Interface"
+                  className="w-full h-auto rounded-lg shadow-inner"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="system-ui" font-size="24" fill="%236b7280">Practitioner Dashboard Preview</text></svg>';
+                  }}
+                />
+              </div>
+            </div>
+            <div className="h-4 bg-gradient-to-tr from-gray-800 to-gray-700 rounded-b-lg mx-auto w-[95%]" />
+            <div className="h-1 bg-gradient-to-tr from-gray-700 to-gray-600 rounded-b-lg mx-auto w-[90%]" />
           </motion.div>
         </div>
       </div>
