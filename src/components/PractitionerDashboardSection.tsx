@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image"; // Import Image
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -174,13 +175,13 @@ export default function PractitionerDashboardSection() {
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
               </div>
               <div className="pt-4">
-                <img
-                  src="/Screenshot 2025-05-22 162323.png"
+                <Image // Use Image component
+                  src="/Screenshot 2025-05-22 162323.png" // Make sure this image exists in your public folder
                   alt="Practitioner Dashboard Interface"
+                  width={800} // Provide appropriate width
+                  height={600} // Provide appropriate height
                   className="w-full h-auto rounded-lg shadow-inner"
-                  onError={(e) => {
-                    e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="system-ui" font-size="24" fill="%236b7280">Practitioner Dashboard Preview</text></svg>';
-                  }}
+                  priority
                 />
               </div>
             </div>

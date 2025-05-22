@@ -2,7 +2,6 @@ import HeroSection from "../components/HeroSection";
 import DashboardOverviewSection from "../components/DashboardOverviewSection";
 import SuperAdminDashboardSection from "../components/SuperAdminDashboardSection";
 import PractitionerDashboardSection from "../components/PractitionerDashboardSection";
-import UserDashboardSection from "../components/UserDashboardSection";
 import IntegrationsAndTechStackSection from "../components/IntegrationsAndTechStackSection";
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
       <DashboardOverviewSection />
       <SuperAdminDashboardSection />
       <PractitionerDashboardSection />
-      {/* <UserDashboardSection /> */}
       <IntegrationsAndTechStackSection />
     </main>
   );

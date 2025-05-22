@@ -37,10 +37,10 @@ const mockupVariants = {
   }
 };
 
-function DashboardOverviewSection() {
+const DashboardOverviewSection = () => {
   return (
-    <section className="bg-gradient-to-b from-white to-gray-50 py-16 px-4 relative overflow-hidden">
-      {/* Tech Pattern Background */}
+    <section className="py-20 px-4 relative overflow-hidden">
+      {/* Background Pattern */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 0.05, scale: 1 }}
@@ -189,6 +189,6 @@ function DashboardOverviewSection() {
       </div>
     </section>
   );
-}
+};
 
 export default DashboardOverviewSection;

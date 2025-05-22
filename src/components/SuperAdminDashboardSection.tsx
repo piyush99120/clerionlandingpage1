@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image"; // Import Image
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -61,8 +62,8 @@ const laptopVariants = {
 
 export default function SuperAdminDashboardSection() {
   return (
-    <section className="bg-gradient-to-br from-[#f8fafc] via-white to-[#f0f9ff] py-24 px-4 relative overflow-hidden">
-      {/* Animated Background Pattern */}
+    <section className="bg-gradient-to-b from-white to-gray-50 py-16 px-4 relative overflow-hidden">
+      {/* Tech Pattern Background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -131,10 +132,13 @@ export default function SuperAdminDashboardSection() {
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
               </div>
               <div className="pt-4">
-                <img
-                  src="/dashboard-admin.png"
+                <Image // Use Image component
+                  src="/dashboard-admin.png" // Make sure this image exists in your public folder
                   alt="Admin Dashboard Interface"
+                  width={800} // Provide appropriate width
+                  height={600} // Provide appropriate height
                   className="w-full h-auto rounded-lg shadow-inner"
+                  priority
                 />
               </div>
             </div>
